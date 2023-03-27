@@ -1,0 +1,68 @@
+<div *ngFor="let reponse of reponses;let i=index">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar [ngStyle]="getURL(reponse.image)" *ngIf="reponse.image!=''"></div>
+        <mat-card-title>{{reponse.user.email}}</mat-card-title>
+      </mat-card-header>
+        <mat-card-content>
+          <strong><a class="question" [routerLink]="['qr']" [queryParams]="reponse.question">{{reponse.question.content}}</a></strong>
+          <p>
+            {{reponse.content}}
+          </p>
+        </mat-card-content>
+        <img mat-card-image src="http://127.0.0.1:8000/uploads/{{reponse.image}}" alt="" *ngIf="reponse.image!=''" height="350px">
+        <mat-card-actions>
+          <button mat-button (click)="$event.stopPropagation();positif({'id_user':user.id,'id_reponse':reponse.id})" [style]="clicked?{'background-color':'#dcdcdc'}:{}" >
+            <mat-icon fontIcon="arrow_circle_up" *ngIf="!clicked"></mat-icon>
+            <mat-icon fontIcon="check_small" *ngIf="clicked" >
+            </mat-icon>{{compteur }}</button>
+          <button mat-button (click)="$event.stopPropagation();negatif()"><mat-icon fontIcon="arrow_circle_down"></mat-icon></button>
+          <button mat-button (click)="$event.stopPropagation();onAddComment(reponse.id)">
+            <mat-icon fontIcon="comment"></mat-icon>{{reponse.commentaires.length}}</button>
+        </mat-card-actions>
+        <form (ngSubmit)="onSubmitForm({'user_id':user.id,'reponse_id':reponse.id})" [formGroup]="form" *ngIf="form" class="row pb-1">
+          <div class="col-lg-8"> 
+            <input type="text" class="form-control border rounded-pill" placeholder="commenter ce contenu" formControlName="content">
+          </div>  
+          <div class="col-4"> 
+            <button class="btn btn-primary btn-md border rounded-pill" >ajouter un commentaire</button>
+          </div>         
+        </form>
+        <mat-list>
+          <mat-list-item *ngFor="let comment of comments;let i=index">
+            <img src="http://127.0.0.1:8000/uploads/{{comment.reponse.image}}" matListItemAvatar alt="">
+            <h6 matListItemTitle>{{comment.user.email}}</h6>
+            <p matListItemLine>{{comment.content}}</p>
+            <mat-divider [inset]="true" *ngIf="i+1<comments.length"></mat-divider>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>      
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:100%">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Donner une réponse</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="modal-body">
+        <div *ngIf="question">
+          <p><strong class="question">{{question.content}}</strong></p>
+          <input type="hidden" name="id_question" [ngModel]="question.id">
+          <input type="hidden" name="id" [ngModel]="user.id" >
+        </div>
+        <textarea name="content" ngModel required cols="55" rows="15" placeholder="Ecrivez votre réponse" class="form-control"></textarea>
+      </div>
+      <div class="modal-footer">
+        <input type="file" accept="image/*" >
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-primary" [disabled]="f.invalid" data-bs-dismiss="modal">Publier</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>

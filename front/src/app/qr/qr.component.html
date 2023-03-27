@@ -1,0 +1,28 @@
+<mat-card class="example-card">
+    <mat-card-content>
+      <strong class="question">{{question.content }}</strong>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button data-bs-toggle="modal" (click)="onSend({'id':question.id,'content':question.content})" data-bs-target="#exampleModal1"><mat-icon fontIcon="border_color"></mat-icon> Repondre</button>
+      <button mat-button><mat-icon fontIcon="rss_feed"></mat-icon>Suivre</button>
+    </mat-card-actions>
+  </mat-card>    
+  <div *ngFor="let reponse of question.reponses">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar [ngStyle]="getUrl(reponse.image)" *ngIf="reponse.image!=''"></div>
+        <mat-card-title>{{reponse.user.email}}</mat-card-title>
+      </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{reponse.content}}
+          </p>
+        </mat-card-content>
+        <img mat-card-image src="http://127.0.0.1:8000/uploads/{{reponse.image}}" alt="" *ngIf="reponse.image!=''" height="400px">
+        <mat-card-actions>
+          <button mat-button (click)="positif({'id':question.user.id,'id_reponse':reponse.id,'bool':1})"><mat-icon fontIcon="arrow_circle_up"></mat-icon></button>
+          <button mat-button (click)="negatif()"><mat-icon fontIcon="arrow_circle_down"></mat-icon></button>
+          <button mat-button><mat-icon fontIcon="comment"></mat-icon></button>
+        </mat-card-actions>
+      </mat-card>      
+</div>  

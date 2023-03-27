@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm mb-5" id="mainNav">
+    <div class="container px-5">
+        <a class="navbar-brand fw-bold" href="#page-top"> <span class="logo">Tola</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="bi-list"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                <li class="nav-item"><a class="nav-link me-lg-3" routerLink="home"><mat-icon fontIcon="home"></mat-icon></a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3"><mat-icon fontIcon="comment"></mat-icon></a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3" routerLink="question"><mat-icon fontIcon="edit_square"></mat-icon></a></li>
+            </ul>
+            <button type="button" class="btn btn-danger rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <span class="d-flex align-items-center">
+                    <a>ajouter une question</a>
+                </span>
+            </button>
+        </div>
+    </div>
+  </nav>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter une question</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="modal-body">
+            <div class="conseil">
+                <strong>conseils pour obtenir des réponses interessantes rapidement</strong>
+                <ul>
+                    <li>vérifier que votre question n'a pas déjà été posée</li>
+                    <li>Pour votre question,privilegiez une forme courte et précise</li>
+                    <li>Vérifiez que vous n'avez pas laissé des fautes d orthographes et de grammaires</li>
+                </ul>
+            </div>
+            <input type="hidden" name="id" [ngModel]="user.id" >
+          <textarea name="content" ngModel required cols="55" rows="15" placeholder="commencer votre question par <<Comment>>, <<Que>>, <<pourquoi>>,ect..." class="form-control"></textarea>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary" [disabled]="f.invalid" data-bs-dismiss="modal">Ajouter une question</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
